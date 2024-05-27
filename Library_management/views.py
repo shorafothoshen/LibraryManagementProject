@@ -47,7 +47,7 @@ class BookDetailsView(DetailView):
                 new_review.save()
                 send_email("Review Book","review_email.html",self.request.user,0)
                 messages.success(request, 'Review submitted successfully!')
-        if "book_borrow" in request.POST:
+        elif "book_borrow" in request.POST:
             if book_user.account.balance >= book_object.price:
                 book_user.account.balance -= book_object.price
                 book_user.save()
