@@ -29,6 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+CSRF_TRUSTED_ORIGINS = ["https://librarymanagementproject-7xbp.onrender.com","http://*.127.0.0.1"]
 
 # Application definition
 
