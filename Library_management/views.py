@@ -40,9 +40,7 @@ class BookDetailsView(DetailView):
         if "book_borrow" in request.POST:
             if book_user.account.balance >= book_object.price:
                 book_user.account.balance -= book_object.price
-                book_user.save(
-                    update_fields=['balance']
-                )
+                book_user.save()
                 BorrowingModel.objects.create(user=book_user, book=book_object)
                 messages.success(request, 'Book borrowed successfully! ✅')
                 send_email("Borrow Book","borrow_email.html",self.request.user,book_object.price)
@@ -86,9 +84,7 @@ def BookReturn(request,id):
     borrow_book=BorrowingModel.objects.get(pk=id)
     userProfile=request.user
     userProfile.account.balance+=borrow_book.book.price
-    userProfile.save(
-        update_fields=['balance']
-    )
+    userProfile.save()
     borrow_book.delete()
     messages.success(request,"Your Borrow book return Successfully ✅")
     send_email("Return Book","return_email.html",request.user,0)
