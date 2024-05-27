@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="flex flex-col items-start p-6 bg-white shadow-lg rounded-lg max-w-4xl mx-auto mt-8">
+  <div class="flex flex-col md:flex-row items-start md:items-center justify-between w-full">
+    <div>
+      <h4 class="font-bold text-3xl text-gray-800 pb-3">Name: {{ user.first_name }} {{ user.last_name }}</h4>
+      <a href="{% url 'update' %}" class="text-blue-600 hover:text-blue-800 underline">Edit Profile</a>
+    </div>
+    <div class="mt-4 md:mt-0">
+      <h5 class="font-semibold text-xl text-gray-700">Balance: ${{ user.account.balance }}</h5>
+    </div>
+  </div>
+</div>
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg w-11/12 lg:w-3/4 mx-auto mt-8 bg-white p-6 rounded-lg">
+  <h2 class="text-2xl font-semibold text-gray-800 mb-4">Borrow History</h2>
+  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <tr>
+        <th scope="col" class="px-6 py-3">ID</th>
+        <th scope="col" class="px-6 py-3">Book Name</th>
+        <th scope="col" class="px-6 py-3">Price</th>
+        <th scope="col" class="px-6 py-3">After Balance</th>
+        <th scope="col" class="px-6 py-3">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for borrow in borrow_history %}
+      <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ borrow.borrow_id }}</th>
+        <td class="px-6 py-4">{{ borrow.book.name }}</td>
+        <td class="px-6 py-4">${{ borrow.book.price }}</td>
+        <td class="px-6 py-4">${{ borrow.user.account.balance }}</td>
+        <td class="px-6 py-4">
+          <a href="{% url 'returnbook' borrow.borrow_id %}" class="text-blue-600 hover:text-blue-800 underline">Return</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock body %}

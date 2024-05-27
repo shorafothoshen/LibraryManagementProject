@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
+  </head>
+  <body class='bg-gray-200'>
+    {% include "navbar.html" %}
+    <hr class="my-4">
+    <div class="container mx-auto px-4" id="main">
+      {% block body %}
+      <div class="lg:container lg:mx-auto">
+        {% block content %}
+        {% endblock %}
+      </div>
+      {% endblock body %}
+    </div>
+  </body>
+</html>

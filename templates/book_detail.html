@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block body %}
+<div class="flex justify-center items-center gap-[100px] m-5">
+    <div class="w-[400px]">
+        <img src="{{book.image.url}}" alt="Photo">
+    </div>
+    <div class="flex flex-col w-[600px] space-y-3">
+        <h3 class="text-2xl">Model: {{book.name}}</h3>
+        <h4 class="text-xl">Price: ${{book.price}}</h4>
+        <h5>Discription: <br></h5>
+        <p>{{book.description}}</p>
+        {% if user.is_authenticated %}
+        <form method="post">
+            {% csrf_token %}
+            <input type="submit" name="book_borrow" value="Borrow" class="border px-4 py-2 border-green-500 bg-green-600 hover:bg-green-800 rounded-md text-white text-xl">
+        </form>
+        {% endif %}
+    </div>
+</div>
+<br>
+
+<div class="flex flex-col items-center p-4">
+    <div class="w-full max-w-2xl">
+        <h1 class="text-2xl font-bold mb-4">Reviews:</h1>
+        {% if review_body %}
+        {% for review in review_body %}
+        <div class="card bg-white shadow-md rounded-lg p-4 mb-4">
+            <div class="card-body">
+                <h3 class="text-xl font-semibold">{{review.name}} <span class="text-gray-500 text-sm">{{review.date}}</span></h3>
+                <h4 class="text-gray-600 text-sm">{{review.email}}</h4>
+                <p class="mt-2 text-gray-800">{{review.body}}</p>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="card bg-white shadow-md rounded-lg p-4 mb-4">
+            <div class="card-body">
+                <h5 class="text-gray-600">No Comments here....</h5>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="mt-6">
+        {% if user.is_authenticated %}
+        {% if review_form %}
+        <h2 class="text-xl font-bold mb-4">Submit a Review</h2>
+        <form method="post" class="bg-white shadow-md rounded-lg p-4">
+            {% csrf_token %}
+            {{ review_form | crispy }}
+            <input type="submit" name="submit_review" value="Send" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        </form>
+        {% endif %}
+        {% else %}
+        <p class="text-red-500">You need to be Borrow and logged in to submit a review.</p>
+        {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
