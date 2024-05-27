@@ -22,5 +22,6 @@ class DepositView(LoginRequiredMixin, CreateView):
         transaction.save()
         account.balance += amount
         account.save(update_fields=['balance'])
+        messages.success(self.request.user,f"You Successfully deposit is $ {amount} ✅")
         send_email("Deposit Money","transaction/deposit_email.html",self.request.user,amount)
         return super().form_valid(form)
