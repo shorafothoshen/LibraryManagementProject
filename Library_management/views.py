@@ -36,31 +36,29 @@ class BookDetailsView(DetailView):
     def post(self, request, *args, **kwargs):
         book_object = self.get_object()
         user_review=UserLibraryAccount.objects.get(user=self.request.user)
-        book_user=request.user
+        book_user=self.request.user
         if "book_borrow" in request.POST:
             if book_user.account.balance >= book_object.price:
                 book_user.account.balance -= book_object.price
-                book_user.save()
+                book_user.account.save()
                 BorrowingModel.objects.create(user=book_user, book=book_object)
                 messages.success(request, 'Book borrowed successfully! ✅')
                 send_email("Borrow Book","borrow_email.html",self.request.user,book_object.price)
                 
             else:
                 messages.warning(request, 'Insufficient balance to borrow this book.')
-
-        if request.method=="POST":
-            if "submit_review" in request.POST:
-                form = ReviewForm(data=self.request.POST)
-                if form.is_valid():
-                    new_review = form.save(commit=False)
-                    new_review.book = book_object
-                    new_review.name=user_review.get_full_name()
-                    new_review.email=user_review.email
-                    new_review.save()
-                    send_email("Review Book","review_email.html",self.request.user,0)
-                    messages.success(request, 'Review Submitted successfully! ✅')
-                else:
-                    messages.error(request,"Wrong Submitted ❌")
+        elif "submit_review" in request.POST:
+            form = ReviewForm(data=self.request.POST)
+            if form.is_valid():
+                new_review = form.save(commit=False)
+                new_review.book = book_object
+                new_review.name=user_review.get_full_name()
+                new_review.email=user_review.email
+                new_review.save()
+                send_email("Review Book","review_email.html",self.request.user,0)
+                messages.success(request, 'Review Submitted successfully! ✅')
+            else:
+                messages.error(request,"Wrong Submitted ❌")
         return self.get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -84,7 +82,7 @@ def BookReturn(request,id):
     borrow_book=BorrowingModel.objects.get(pk=id)
     userProfile=request.user
     userProfile.account.balance+=borrow_book.book.price
-    userProfile.save()
+    userProfile.account.save()
     borrow_book.delete()
     messages.success(request,"Your Borrow book return Successfully ✅")
     send_email("Return Book","return_email.html",request.user,0)
