@@ -36,7 +36,7 @@ A web application built with **Django** that simplifies how a library manages it
 | Layer | Technology |
 |-------|------------|
 | Language | Python 3 |
-| Backend Framework | Django (MVT / MVC pattern) |
+| Backend Framework | Django (MVC pattern) |
 | Frontend | HTML, Django Templates, Tailwind CSS |
 | Database | SQLite (local development), PostgreSQL-ready (`psycopg2`, `dj-database-url`) |
 | Forms | django-crispy-forms, crispy-tailwind, crispy-bootstrap5 |
