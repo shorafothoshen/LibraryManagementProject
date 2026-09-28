@@ -8,11 +8,13 @@ A web application built with **Django** that simplifies how a library manages it
 
 ---
 
-## 📸 Screenshot
-
+## 📸 Home page
 ![Home Page](screenshots/home.png)
 
-> Screenshot-ta ekta `screenshots` folder baniye tar moddhe `home.png` name-e homepage-er image rakho.
+
+## 📸 Details Book
+![Details Page](screenshots/details.png)
+
 
 ---
 
