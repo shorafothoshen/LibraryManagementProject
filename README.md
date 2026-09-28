@@ -1,4 +1,4 @@
-# 📚 Library Management System
+h# 📚 Library Management System
 
 A web application built with **Django** that simplifies how a library manages its books, members and borrowing. Users can create an account, browse books by category, borrow and return books, and track their transactions.
 
@@ -38,7 +38,7 @@ A web application built with **Django** that simplifies how a library manages it
 | Language | Python 3 |
 | Backend Framework | Django (MVC pattern) |
 | Frontend | HTML, Django Templates, Tailwind CSS |
-| Database | SQLite (local development), PostgreSQL-ready (`psycopg2`, `dj-database-url`) |
+| Database | SQLite (local development)|
 | Forms | django-crispy-forms, crispy-tailwind, crispy-bootstrap5 |
 | Tailwind Integration | django-tailwind, django-tailwindcss |
 | Static/Asset handling | django-compressor, django-browser-reload |
